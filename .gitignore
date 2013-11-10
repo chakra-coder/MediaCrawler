@@ -1,7 +1,8 @@
-/.idea
-/logs
-/target
+/.idea/
+/logs/
+/target/
 *.iml
-/*/for-test
-/*/lib
 
+/*/for-test/
+/*/lib/
+/*/target/
