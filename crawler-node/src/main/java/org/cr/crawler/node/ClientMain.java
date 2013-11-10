@@ -1,6 +1,6 @@
 package org.cr.crawler.node;
 
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -12,8 +12,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class ClientMain {
     public static void main(String[] args) throws Exception {
 
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-                new String[] { "classpath:applicationContext.xml" });
-
+//        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
+//                new String[] { "classpath:applicationContext.xml" });
+        AbstractApplicationContext applicationContext = new ClassPathXmlApplicationContext(
+                new String[]{"classpath:applicationContext.xml"});
+        // to make the smartlifecycle works
+//        applicationContext.registerShutdownHook();
     }
 }

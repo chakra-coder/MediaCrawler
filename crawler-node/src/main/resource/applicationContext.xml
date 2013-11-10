@@ -32,8 +32,11 @@
         </property>
     </bean>
 
+    <!--<bean id="test" class="org.cr.crawler.node.NodeController"></bean>-->
 
-    <!--   database config    -->
+
+
+    <!-- database config -->
     <mongo:mongo host="${mongo.host}" port="${mongo.port}">
         <mongo:options
                 connections-per-host="${mongo.connectionsPerHost}"
@@ -49,10 +52,10 @@
                 write-fsync="true"/>
     </mongo:mongo>
 
-    <mongo:db-factory dbname="crawler" mongo-ref="mongo"/>
+    <mongo:db-factory dbname="${mango.dbname}" mongo-ref="mongo"/>
 
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
     </bean>
-
+    <!-- database config end -->
 </beans>

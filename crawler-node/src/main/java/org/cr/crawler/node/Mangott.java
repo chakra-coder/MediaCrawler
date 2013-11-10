@@ -5,12 +5,13 @@ import org.cr.crawler.node.model.Task;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
 
 /**
  * Author: caorong
@@ -18,7 +19,7 @@ import java.util.List;
  * Time: 下午5:52
  * To change this template use File | Settings | File Templates.
  */
-@Component
+//@Component
 public class Mangott implements InitializingBean {
     private static final Logger log = Logger.getLogger(Mangott.class);
 
@@ -41,9 +42,11 @@ public class Mangott implements InitializingBean {
         log.info("Found: " + p + " id=" + p.getId());
 
         // Update
-        mongoTemplate.updateFirst(new Query(Criteria.where("url").is("Joe")), Update.update("abc", 1), Task.class);
+//        mongoTemplate.updateFirst(new Query(Criteria.where("url").is("Joe")), Update.update("abc", 1), Task.class);
+        mongoTemplate.updateFirst(query(where("url").is("Joe")), Update.update("abc", 1), Task.class);
 
-        p = mongoTemplate.findOne(new Query(Criteria.where("url").is("Joe")), Task.class);
+//        p = mongoTemplate.findOne(new Query(Criteria.where("url").is("Joe")), Task.class);
+        p = mongoTemplate.findOne(query(where("url").is("Joe")), Task.class);
         log.info("Updated: " + p);
 
         // Delete
