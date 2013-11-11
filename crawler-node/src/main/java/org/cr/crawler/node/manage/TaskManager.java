@@ -11,10 +11,11 @@ import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.cr.crawler.node.Constant;
+import org.cr.crawler.node.executor.TaskExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.task.TaskExecutor;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,6 +37,10 @@ public class TaskManager {
 	private Integer requesttInterval;
 
 	private Map<Short, AtomicInteger> runningTaskCounts;
+
+	private HashMap<Short, TaskExecutor> listExecutors;
+
+	private HashMap<Short, TaskExecutor> detailExecutors;
 
 	public boolean isStop() {
 		return !run;
@@ -67,6 +72,7 @@ public class TaskManager {
 		state_codes.add(Constant.TASK_STATE_RETRYING);
 		while (run) {
 
+			// sleep
 		}
 	}
 
