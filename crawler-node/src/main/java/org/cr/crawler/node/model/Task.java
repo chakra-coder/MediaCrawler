@@ -1,51 +1,32 @@
 package org.cr.crawler.node.model;
 
+import java.util.Date;
+
 /**
- * Author: caorong
- * Date: 13-11-9
- * Time: 下午5:08
- * To change this template use File | Settings | File Templates.
+ * Author: caorong Date: 13-11-9 Time: 下午5:08 To change this template use File |
+ * Settings | File Templates.
  */
 public class Task {
-    private String id;
-    private String url;
-    private int abc;
+	private String id;
+	// the real url to download
+	private String targetUrl;
 
-    public Task(String url, int abc) {
-        this.abc = abc;
-        this.url = url;
-    }
+	private String nodename;
 
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id='" + id + '\'' +
-                ", url='" + url + '\'' +
-                ", abc=" + abc +
-                '}';
-    }
+	private Integer status;
+	private Integer priority;
 
-    public String getId() {
-        return id;
-    }
+	private String taskConfigId;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	private Integer retry;
 
-    public String getUrl() {
-        return url;
-    }
+	// list parse task or detail download task
+	private Integer type;
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public int getAbc() {
-        return abc;
-    }
-
-    public void setAbc(int abc) {
-        this.abc = abc;
-    }
+	private Date createTime;
+	private Date startTime;
+	private Date finishTime;
+	
+	
+	
 }

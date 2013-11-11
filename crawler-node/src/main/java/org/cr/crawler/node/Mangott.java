@@ -28,35 +28,35 @@ public class Mangott implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-//        System.out.println(mongoTemplate);
-//        System.out.println(mongoOps.);
-
-        Task p = new Task("Joe", 34);
-
-        // Insert is used to initially store the object into the database.
-        mongoTemplate.insert(p);
-        log.info("Insert: " + p);
-
-        // Find
-        p = mongoTemplate.findById(p.getId(), Task.class);
-        log.info("Found: " + p + " id=" + p.getId());
-
-        // Update
-//        mongoTemplate.updateFirst(new Query(Criteria.where("url").is("Joe")), Update.update("abc", 1), Task.class);
-        mongoTemplate.updateFirst(query(where("url").is("Joe")), Update.update("abc", 1), Task.class);
-
-//        p = mongoTemplate.findOne(new Query(Criteria.where("url").is("Joe")), Task.class);
-        p = mongoTemplate.findOne(query(where("url").is("Joe")), Task.class);
-        log.info("Updated: " + p);
-
-        // Delete
-        mongoTemplate.remove(p);
-
-        // Check that deletion worked
-        List<Task> people = mongoTemplate.findAll(Task.class);
-        log.info("Number of people = : " + people.size());
-
-
-        mongoTemplate.dropCollection(Task.class);
+////        System.out.println(mongoTemplate);
+////        System.out.println(mongoOps.);
+//
+//        Task p = new Task("Joe", 34);
+//
+//        // Insert is used to initially store the object into the database.
+//        mongoTemplate.insert(p);
+//        log.info("Insert: " + p);
+//
+//        // Find
+//        p = mongoTemplate.findById(p.getId(), Task.class);
+//        log.info("Found: " + p + " id=" + p.getId());
+//
+//        // Update
+////        mongoTemplate.updateFirst(new Query(Criteria.where("url").is("Joe")), Update.update("abc", 1), Task.class);
+//        mongoTemplate.updateFirst(query(where("url").is("Joe")), Update.update("abc", 1), Task.class);
+//
+////        p = mongoTemplate.findOne(new Query(Criteria.where("url").is("Joe")), Task.class);
+//        p = mongoTemplate.findOne(query(where("url").is("Joe")), Task.class);
+//        log.info("Updated: " + p);
+//
+//        // Delete
+//        mongoTemplate.remove(p);
+//
+//        // Check that deletion worked
+//        List<Task> people = mongoTemplate.findAll(Task.class);
+//        log.info("Number of people = : " + people.size());
+//
+//
+//        mongoTemplate.dropCollection(Task.class);
     }
 }

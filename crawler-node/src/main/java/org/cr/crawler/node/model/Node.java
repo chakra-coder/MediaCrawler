@@ -3,54 +3,58 @@ package org.cr.crawler.node.model;
 import java.util.Date;
 
 /**
- * Author: caorong
- * Date: 13-11-10
- * Time: 下午10:27
- * To change this template use File | Settings | File Templates.
+ * Author: caorong Date: 13-11-10 Time: 下午10:27 To change this template use File
+ * | Settings | File Templates.
  */
 public class Node {
 
-    private String id;
-    private String name;
-    private Date regtime;
+	private String id;
+	private String name;
+	private String ip;
+	private Date regtime;
 
+	public Node(String name, Date regtime, String ip) {
+		super();
+		this.name = name;
+		this.ip = ip;
+		this.regtime = regtime;
+	}
 
-    public Node(String name, Date regtime) {
-        this.name = name;
-        this.regtime = regtime;
-    }
+	@Override
+	public String toString() {
+		return "Node [id=" + id + ", name=" + name + ", ip=" + ip
+				+ ", regtime=" + regtime + "]";
+	}
 
-    @Override
-    public String toString() {
-        return "Node{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", regtime=" + regtime +
-                '}';
-    }
+	public String getIp() {
+		return ip;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Date getRegtime() {
-        return regtime;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setRegtime(Date regtime) {
-        this.regtime = regtime;
-    }
+	public Date getRegtime() {
+		return regtime;
+	}
+
+	public void setRegtime(Date regtime) {
+		this.regtime = regtime;
+	}
 }
-

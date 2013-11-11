@@ -1,5 +1,6 @@
 package org.cr.crawler.node;
 
+import org.cr.crawler.node.manage.TaskManager;
 import org.cr.crawler.node.model.Node;
 import org.cr.crawler.node.service.NodeService;
 import org.eclipse.jetty.server.Server;
@@ -12,70 +13,101 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Date;
 
 /**
- * Node controller
- * start worker
- * start jetty to see logs remote  xx:9000/logs
- * Author: caorong
- * Date: 13-11-10
- * Time: 下午4:42
+ * Node controller <br>
+ * start worker. <br>
+ * start jetty to see logs remote xx:9000/logs <br>
+ * Author: caorong Date: 13-11-10 Time: 下午4:42
  */
 
 @Component
 public class NodeController {
 
-    Logger logger = LoggerFactory.getLogger(NodeController.class);
+	private Logger logger = LoggerFactory.getLogger(NodeController.class);
 
-    @Value("${crawler.node.name}")
-    private String name;
+	private String localIpAddress;
+	@Value("${crawler.node.name}")
+	private String name;
 
-    @Autowired
-    private NodeService nodeService;
-    Server server;
+	@Value("${crawler.node.reportInterval}")
+	private Integer reportInterval;
 
-    @PostConstruct
-    public void startNode() {
-//        logger.info("123123 [{}]","123");
-        // start jetty
-//        configureServer();
+	@Autowired
+	private NodeService nodeService;
+	Server server;
 
-        while (true) {
-            // update the node information
-            runReport();
+	@Autowired
+	private TaskManager taskManager;
 
-            try {
-                Thread.sleep(1000L * 10);
-            } catch (InterruptedException e) {
-            }
-        }
-//        System.out.println(1111);
-    }
+	@PostConstruct
+	public void startNode() {
+		// set current ip
+		try {
+			localIpAddress = InetAddress.getLocalHost().getHostAddress();
+		} catch (UnknownHostException e1) {
+			logger.error(
+					"get ip address error ,localIpAddress set to 127.0.0.1", e1);
+			localIpAddress = "127.0.0.1";
+		}
+		// start jetty
+		// configureServer();
 
-    private void runReport() {
-        nodeService.insertOrUpdateNode(new Node(name, new Date()));
-    }
+		while (true) {
+			try {
+				// update the node information (worker's heartbeat)
+				runReport();
+				if (taskManager.isStop()) {
+					new Thread(new Runnable() {
 
-    @PreDestroy
-    public void finishNode() {
-        System.out.println(123123 + "1231-->>>");
-    }
+						@Override
+						public void run() {
+							taskManager.start();
+						}
+					}, name).start();
+				}
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+				if (taskManager.isRunning()) {
+					taskManager.stop();
+				}
+			}
+			try {
+				Thread.sleep(1000L * reportInterval);
+			} catch (InterruptedException e) {
+				logger.error(e.getMessage(), e);
+			}
+		}
+	}
 
-    /**
-     * config logs's path with jetty
-     */
-    void configureServer() {
-        // set log web directory
-        server = new Server(9000);
-        WebAppContext webapp = new WebAppContext();
-        webapp.setContextPath("/logs");
-        webapp.setResourceBase("./logs");
-        server.setHandler(webapp);
-        try {
-            server.start();
-        } catch (Exception e) {
-            logger.error("jetty start error", e);
-        }
-    }
+	private void runReport() {
+		nodeService.insertOrUpdateNode(new Node(name, new Date(),
+				localIpAddress));
+	}
+
+	// @PreDestroy
+	// public void finishNode() {
+	// System.out.println(123123 + "1231-->>>");
+	// }
+
+	/**
+	 * config logs's path with jetty
+	 */
+	void configureServer() {
+		// set log web directory
+		server = new Server(9000);
+		WebAppContext webapp = new WebAppContext();
+		webapp.setContextPath("/logs");
+		webapp.setResourceBase("./logs");
+		server.setHandler(webapp);
+		try {
+			server.start();
+		} catch (Exception e) {
+			logger.error("jetty start error", e);
+		}
+	}
 }
