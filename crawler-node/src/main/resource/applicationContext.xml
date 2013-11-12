@@ -31,7 +31,6 @@
 		</property>
 	</bean>
 
-
 	<bean id="taskManager" class="org.cr.crawler.node.manage.TaskManager"
 		init-method="init">
 		<property name="listExecutorType" value="1"></property>
