@@ -1,7 +1,6 @@
 package org.cr.crawler.node;
 
-import org.apache.log4j.Logger;
-import org.cr.crawler.node.model.Task;
+import org.apache.log4j.Logger; 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;

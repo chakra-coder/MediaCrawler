@@ -1,8 +1,14 @@
 package org.cr.crawler.node;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Date;
+
+import javax.annotation.PostConstruct;
+
+import org.cr.crawler.common.model.Node;
+import org.cr.crawler.common.service.NodeService;
 import org.cr.crawler.node.manage.TaskManager;
-import org.cr.crawler.node.model.Node;
-import org.cr.crawler.node.service.NodeService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.slf4j.Logger;
@@ -10,13 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Date;
 
 /**
  * Node controller <br>

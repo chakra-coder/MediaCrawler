@@ -10,13 +10,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.annotation.PostConstruct;
+
 import org.cr.crawler.node.Constant;
 import org.cr.crawler.node.executor.TaskExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.InitBinder;
 
 /**
  * 循环申请执行任务
@@ -41,6 +45,10 @@ public class TaskManager {
 	private HashMap<Short, TaskExecutor> listExecutors;
 
 	private HashMap<Short, TaskExecutor> detailExecutors;
+
+	private Integer listExecutorType;
+
+	private Integer detailExecutorType;
 
 	public boolean isStop() {
 		return !run;
@@ -77,9 +85,13 @@ public class TaskManager {
 	}
 
 	/**
-	 * binding detailtask and listtask 's executors
+	 * create ThreadPoolExecutors & binding detailtask and listtask 's executors
 	 */
+	// @PostConstruct
 	public void init() {
+		// create ThreadPoolExecutors
+		System.out.println();
+		// binding executor's count
 		runningTaskCounts = new HashMap<Short, AtomicInteger>();
 		for (Entry<Short, TaskExecutor> entry : detailExecutors.entrySet()) {
 			runningTaskCounts.put(entry.getKey(), entry.getValue().getCount());
@@ -88,5 +100,6 @@ public class TaskManager {
 			runningTaskCounts.put((short) (entry.getKey() + 10), entry
 					.getValue().getCount());
 		}
+		System.out.println(runningTaskCounts);
 	}
 }

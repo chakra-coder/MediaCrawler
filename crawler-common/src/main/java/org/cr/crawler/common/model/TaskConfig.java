@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cr.crawler.node.model;
+package org.cr.crawler.common.model;
 
 import java.util.Date;
 

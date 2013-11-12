@@ -5,8 +5,8 @@ package org.cr.crawler.node.executor;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.cr.crawler.node.model.Task;
-
+import org.cr.crawler.common.model.Task;
+ 
 /**
  * @author caorong
  * 

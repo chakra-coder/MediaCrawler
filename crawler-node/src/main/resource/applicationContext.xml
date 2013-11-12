@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 
 
@@ -15,47 +14,109 @@
 
 		http://www.springframework.org/schema/data/mongo
         http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd"
-       default-lazy-init="false">
-    <context:annotation-config/>
-    <context:component-scan base-package="org.cr.crawler.node"/>
-    <bean id="propertyConfigurer"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>
-                    classpath:conf.properties
-                </value>
-                <value>
-                    classpath:mango.properties
-                </value>
-            </list>
-        </property>
-    </bean>
-
-    <!--<bean id="test" class="org.cr.crawler.node.NodeController"></bean>-->
+	default-lazy-init="false">
+	<context:annotation-config />
+	<context:component-scan base-package="org.cr.crawler.node" />
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>
+					classpath:conf.properties
+				</value>
+				<value>
+					classpath:mango.properties
+				</value>
+			</list>
+		</property>
+	</bean>
 
 
+	<bean id="taskManager" class="org.cr.crawler.node.manage.TaskManager"
+		init-method="init">
+		<property name="listExecutorType" value="1"></property>
+		<property name="detailExecutorType" value="2"></property>
+		<property name="listExecutors">
+			<map key-type="java.lang.Short" value-type="org.cr.crawler.node.executor.TaskExecutor">
+				<entry key="1" value-ref="listPageExecutor"></entry>
+			</map>
+		</property>
+		<property name="detailExecutors">
+			<map key-type="java.lang.Short" value-type="org.cr.crawler.node.executor.TaskExecutor">
+				<entry key="1" value-ref="detailPageExecutor"></entry>
+				<entry key="2" value-ref="downloadExecutor"></entry>
+				<entry key="3" value-ref="uploadExecutor"></entry>
+			</map>
+		</property>
+	</bean>
 
-    <!-- database config -->
-    <mongo:mongo host="${mongo.host}" port="${mongo.port}">
-        <mongo:options
-                connections-per-host="${mongo.connectionsPerHost}"
-                threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
-                connect-timeout="${mongo.connectTimeout}"
-                max-wait-time="${mongo.maxWaitTime}"
-                auto-connect-retry="${mongo.autoConnectRetry}"
-                socket-keep-alive="${mongo.socketKeepAlive}"
-                socket-timeout="${mongo.socketTimeout}"
-                slave-ok="${mongo.slaveOk}"
-                write-number="1"
-                write-timeout="0"
-                write-fsync="true"/>
-    </mongo:mongo>
+	<!-- TaskExecutors -->
+	<bean id="listPageExecutor" class="org.cr.crawler.node.executor.SimpleTaskExecutor"
+		init-method="init">
+		<property name="operation" ref="listPageOperation"></property>
+		<property name="poolName" value="listPageExecutor"></property>
+		<property name="poolSize" value="${listpage.poolSize}"></property>
+		<property name="queueSize" value="${listpage.queueSize}"></property>
+		<property name="handler" ref="simpleCallbackHandler"></property>
+	</bean>
+	<bean id="detailPageExecutor" class="org.cr.crawler.node.executor.SimpleTaskExecutor"
+		init-method="init">
+		<property name="operation" ref="detailPageOperation"></property>
+		<property name="poolName" value="detailPageExecutor"></property>
+		<property name="poolSize" value="${detailpage.poolSize}"></property>
+		<property name="queueSize" value="${detailpage.queueSize}"></property>
+		<property name="handler" ref="simpleCallbackHandler"></property>
+	</bean>
+	<bean id="downloadExecutor" class="org.cr.crawler.node.executor.SimpleTaskExecutor"
+		init-method="init">
+		<property name="operation" ref="downloadOperation"></property>
+		<property name="poolName" value="downloadExecutor"></property>
+		<property name="poolSize" value="${download.poolSize}"></property>
+		<property name="queueSize" value="${download.queueSize}"></property>
+		<property name="handler" ref="simpleCallbackHandler"></property>
+	</bean>
+	<bean id="uploadExecutor" class="org.cr.crawler.node.executor.SimpleTaskExecutor"
+		init-method="init">
+		<property name="operation" ref="uploadOperation"></property>
+		<property name="poolName" value="uploadExecutor"></property>
+		<property name="poolSize" value="${upload.poolSize}"></property>
+		<property name="queueSize" value="${upload.queueSize}"></property>
+		<property name="handler" ref="simpleCallbackHandler"></property>
+	</bean>
 
-    <mongo:db-factory dbname="${mango.dbname}" mongo-ref="mongo"/>
+	<!-- operation -->
+	<bean id="listPageOperation"
+		class="com.ximalaya.crawler.node.operation.impl.ListPageOperation">
+		<property name="parsers">
+			<map key-type="java.lang.String" value-type="org.cr.crawler.node.parser.Parser">
+				<entry key="163" value-ref="openCourseParser"></entry>
+			</map>
+		</property>
+	</bean>
+	<bean id="detailPageOperation"
+		class="com.ximalaya.crawler.node.operation.impl.DetailPageOperation">
+		<property name="parsers">
+			<map key-type="java.lang.String" value-type="org.cr.crawler.node.parser.Parser">
+				<entry key="163" value-ref="openCourseParser"></entry>
+			</map>
+		</property>
+	</bean>
 
-    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
-    </bean>
-    <!-- database config end -->
+
+	<!-- database config -->
+	<mongo:mongo host="${mongo.host}" port="${mongo.port}">
+		<mongo:options connections-per-host="${mongo.connectionsPerHost}"
+			threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
+			connect-timeout="${mongo.connectTimeout}" max-wait-time="${mongo.maxWaitTime}"
+			auto-connect-retry="${mongo.autoConnectRetry}" socket-keep-alive="${mongo.socketKeepAlive}"
+			socket-timeout="${mongo.socketTimeout}" slave-ok="${mongo.slaveOk}"
+			write-number="1" write-timeout="0" write-fsync="true" />
+	</mongo:mongo>
+
+	<mongo:db-factory dbname="${mango.dbname}" mongo-ref="mongo" />
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+	</bean>
+	<!-- database config end -->
 </beans>
