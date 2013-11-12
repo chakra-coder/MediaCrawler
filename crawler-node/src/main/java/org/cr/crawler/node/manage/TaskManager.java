@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.PostConstruct;
 
-import org.cr.crawler.node.Constant;
+import org.cr.crawler.common.Constant;
 import org.cr.crawler.node.executor.TaskExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

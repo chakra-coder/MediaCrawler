@@ -1,12 +1,4 @@
-package org.cr.crawler.node;
-
-import com.mongodb.Mongo;
-import org.apache.log4j.Logger; 
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+package org.cr;
 
 /**
  * Author: caorong

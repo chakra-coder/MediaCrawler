@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.cr.crawler.node;
+package org.cr.crawler.common;
 
 /**
  * @author caorong
