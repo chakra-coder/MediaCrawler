@@ -9,7 +9,7 @@ import java.util.Date;
 public class Task {
 	private String id;
 	// the real url to download
-	private String targetUrl;
+	private String url;
 
 	private String nodename;
 
@@ -27,11 +27,11 @@ public class Task {
 	private Date startTime;
 	private Date finishTime;
 
-	public Task(String id, String targetUrl, String nodename, Integer state,
+	public Task(String id, String url, String nodename, Integer state,
 			Integer priority, String taskConfigId, Integer type, Date createTime) {
 		super();
 		this.id = id;
-		this.targetUrl = targetUrl;
+		this.url = url;
 		this.nodename = nodename;
 		this.state = state;
 		this.priority = priority;
@@ -42,8 +42,8 @@ public class Task {
 
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", targetUrl=" + targetUrl + ", nodename="
-				+ nodename + ", state=" + state + ", priority=" + priority
+		return "Task [id=" + id + ", url=" + url + ", nodename=" + nodename
+				+ ", state=" + state + ", priority=" + priority
 				+ ", taskConfigId=" + taskConfigId + ", retry=" + retry
 				+ ", type=" + type + ", createTime=" + createTime
 				+ ", startTime=" + startTime + ", finishTime=" + finishTime
@@ -58,12 +58,12 @@ public class Task {
 		this.id = id;
 	}
 
-	public String getTargetUrl() {
-		return targetUrl;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setTargetUrl(String targetUrl) {
-		this.targetUrl = targetUrl;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public String getNodename() {
