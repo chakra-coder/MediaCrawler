@@ -7,135 +7,139 @@ import java.util.Date;
  * Settings | File Templates.
  */
 public class Task {
-	private String id;
-	// the real url to download
-	private String url;
+    private String id;
+    // the real url to download
+    private String url;
 
-	private String nodename;
+    private String nodename;
 
-	private Integer state;
-	private Integer priority;
+    private Integer state;
+    private Integer priority;
 
-	private String taskConfigId;
+    private String taskConfigId;
 
-	private Integer retry;
+    private Integer retry;
 
-	// list parse task or detail download task
-	private Integer type;
+    // list parse task or detail download task
+    private Integer type;
 
-	private Date createTime;
-	private Date startTime;
-	private Date finishTime;
+    private Date createTime;
+    private Date startTime;
+    private Date finishTime;
 
-	public Task(String id, String url, String nodename, Integer state,
-			Integer priority, String taskConfigId, Integer type, Date createTime) {
-		super();
-		this.id = id;
-		this.url = url;
-		this.nodename = nodename;
-		this.state = state;
-		this.priority = priority;
-		this.taskConfigId = taskConfigId;
-		this.type = type;
-		this.createTime = createTime;
-	}
+    public Task() {
+        super();
+    }
 
-	@Override
-	public String toString() {
-		return "Task [id=" + id + ", url=" + url + ", nodename=" + nodename
-				+ ", state=" + state + ", priority=" + priority
-				+ ", taskConfigId=" + taskConfigId + ", retry=" + retry
-				+ ", type=" + type + ", createTime=" + createTime
-				+ ", startTime=" + startTime + ", finishTime=" + finishTime
-				+ "]";
-	}
+    public Task(String id, String url, String nodename, Integer state,
+                Integer priority, String taskConfigId, Integer type, Date createTime) {
+        super();
+        this.id = id;
+        this.url = url;
+        this.nodename = nodename;
+        this.state = state;
+        this.priority = priority;
+        this.taskConfigId = taskConfigId;
+        this.type = type;
+        this.createTime = createTime;
+    }
 
-	public String getId() {
-		return id;
-	}
+    @Override
+    public String toString() {
+        return "Task [id=" + id + ", url=" + url + ", nodename=" + nodename
+                + ", state=" + state + ", priority=" + priority
+                + ", taskConfigId=" + taskConfigId + ", retry=" + retry
+                + ", type=" + type + ", createTime=" + createTime
+                + ", startTime=" + startTime + ", finishTime=" + finishTime
+                + "]";
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public String getNodename() {
-		return nodename;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	public void setNodename(String nodename) {
-		this.nodename = nodename;
-	}
+    public String getNodename() {
+        return nodename;
+    }
 
-	public Integer getState() {
-		return state;
-	}
+    public void setNodename(String nodename) {
+        this.nodename = nodename;
+    }
 
-	public void setState(Integer state) {
-		this.state = state;
-	}
+    public Integer getState() {
+        return state;
+    }
 
-	public Integer getPriority() {
-		return priority;
-	}
+    public void setState(Integer state) {
+        this.state = state;
+    }
 
-	public void setPriority(Integer priority) {
-		this.priority = priority;
-	}
+    public Integer getPriority() {
+        return priority;
+    }
 
-	public String getTaskConfigId() {
-		return taskConfigId;
-	}
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
 
-	public void setTaskConfigId(String taskConfigId) {
-		this.taskConfigId = taskConfigId;
-	}
+    public String getTaskConfigId() {
+        return taskConfigId;
+    }
 
-	public Integer getRetry() {
-		return retry;
-	}
+    public void setTaskConfigId(String taskConfigId) {
+        this.taskConfigId = taskConfigId;
+    }
 
-	public void setRetry(Integer retry) {
-		this.retry = retry;
-	}
+    public Integer getRetry() {
+        return retry;
+    }
 
-	public Integer getType() {
-		return type;
-	}
+    public void setRetry(Integer retry) {
+        this.retry = retry;
+    }
 
-	public void setType(Integer type) {
-		this.type = type;
-	}
+    public Integer getType() {
+        return type;
+    }
 
-	public Date getCreateTime() {
-		return createTime;
-	}
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-	public Date getStartTime() {
-		return startTime;
-	}
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
+    public Date getStartTime() {
+        return startTime;
+    }
 
-	public Date getFinishTime() {
-		return finishTime;
-	}
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
 
-	public void setFinishTime(Date finishTime) {
-		this.finishTime = finishTime;
-	}
+    public Date getFinishTime() {
+        return finishTime;
+    }
+
+    public void setFinishTime(Date finishTime) {
+        this.finishTime = finishTime;
+    }
 
 }

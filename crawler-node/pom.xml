@@ -274,7 +274,15 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.1</version>
 		</dependency>
-		<!-- webmagic -->
+
+        <!-- httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.1</version>
+        </dependency>
+
+        <!-- webmagic -->
 		<dependency>
 			<groupId>us.codecraft</groupId>
 			<artifactId>webmagic-core</artifactId>
@@ -285,7 +293,12 @@
 			<artifactId>webmagic-extension</artifactId>
 			<version>0.4.0</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>com.github.stephenc.high-scale-lib</groupId>
+            <artifactId>high-scale-lib</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+    </dependencies>
 
 	<profiles>
 		<profile>
