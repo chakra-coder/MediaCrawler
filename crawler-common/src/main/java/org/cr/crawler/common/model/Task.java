@@ -31,10 +31,9 @@ public class Task {
         super();
     }
 
-    public Task(String id, String url, String nodename, Integer state,
+    public Task(String url, String nodename, Integer state,
                 Integer priority, String taskConfigId, Integer type, Date createTime) {
         super();
-        this.id = id;
         this.url = url;
         this.nodename = nodename;
         this.state = state;
