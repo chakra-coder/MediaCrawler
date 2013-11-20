@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.cr.crawler.common.model.Task;
 import org.cr.crawler.common.model.TaskConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TaskService {
+
+	private Logger logger = LoggerFactory.getLogger(TaskService.class);
 	@Autowired
 	private MongoOperations mongoTemplate;
 
@@ -32,6 +36,10 @@ public class TaskService {
 		List<TaskConfig> taskConfigs = mongoTemplate.find(
 				query(where("id").is(oriTask.getTaskConfigId())),
 				TaskConfig.class);
+		TaskConfig taskConfig = null;
+		if (taskConfigs.size() > 0) {
+			taskConfig = taskConfigs.get(0);
+		}
 		for (Map<String, String> map : detailUrls) {
 			if (map.get("url") == null) {
 				continue;
@@ -41,8 +49,24 @@ public class TaskService {
 				continue;
 			}
 			Task task = new Task();
+//			if (taskConfig != null) {
+//				task.setPriority(taskConfig.getPriority());
+//				task.setConfigId(taskConfig.getId());
+//				task.setGroupname(taskConfig.getGroupname());
+//			}
+//			task.setState(Constant.TASK_STATE_INITIAL);
+//			task.setResultState(Constant.TASK_STATE_INITIAL);
+//			task.setUrl(map.get("url"));
+//			task.setType(Constant.DETAIL_TASK_TYPE);
+//			task.setAlbumId(album.getId());
+//			task.setAudioId(audioId);
+//			task.setAlbumTitle(audio.getAlbumTitle());
+//			task.setAudioTitle(audio.getTitle());
+//			task.setCreateTime(new Date(System.currentTimeMillis()));
+
 			mongoTemplate.insert(task);
 		}
+
 	}
 
 	private boolean checkDetailUrl(String url) {
