@@ -4,9 +4,11 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 import static org.springframework.data.mongodb.core.query.Update.update;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.cr.crawler.common.Constant;
 import org.cr.crawler.common.model.Task;
 import org.cr.crawler.common.model.TaskConfig;
 import org.slf4j.Logger;
@@ -31,42 +33,44 @@ public class TaskService {
 				update("state", task.getState()), Task.class);
 	}
 
-	public void submitTaskFromListMap(List<Map<String, String>> detailUrls,
-			Task oriTask) {
-		List<TaskConfig> taskConfigs = mongoTemplate.find(
-				query(where("id").is(oriTask.getTaskConfigId())),
-				TaskConfig.class);
-		TaskConfig taskConfig = null;
-		if (taskConfigs.size() > 0) {
-			taskConfig = taskConfigs.get(0);
-		}
-		for (Map<String, String> map : detailUrls) {
-			if (map.get("url") == null) {
-				continue;
-			}
-			// 这里检测方式下载重复视频
-			if (this.checkDetailUrl(map.get("url"))) {
-				continue;
-			}
-			Task task = new Task();
-//			if (taskConfig != null) {
-//				task.setPriority(taskConfig.getPriority());
-//				task.setConfigId(taskConfig.getId());
-//				task.setGroupname(taskConfig.getGroupname());
-//			}
-//			task.setState(Constant.TASK_STATE_INITIAL);
-//			task.setResultState(Constant.TASK_STATE_INITIAL);
-//			task.setUrl(map.get("url"));
-//			task.setType(Constant.DETAIL_TASK_TYPE);
-//			task.setAlbumId(album.getId());
-//			task.setAudioId(audioId);
-//			task.setAlbumTitle(audio.getAlbumTitle());
-//			task.setAudioTitle(audio.getTitle());
-//			task.setCreateTime(new Date(System.currentTimeMillis()));
+	public boolean submitTaskFromListMap(List<Map<String, String>> detailUrls,
+			Task oriTask, String nodeName) {
+		try {
 
-			mongoTemplate.insert(task);
+			List<TaskConfig> taskConfigs = mongoTemplate.find(query(where("id")
+					.is(oriTask.getTaskConfigId())), TaskConfig.class);
+			TaskConfig taskConfig = null;
+			if (taskConfigs.size() > 0) {
+				taskConfig = taskConfigs.get(0);
+			}
+			for (Map<String, String> map : detailUrls) {
+				if (map.get("url") == null) {
+					continue;
+				}
+				// 这里检测方式下载重复视频
+				if (this.checkDetailUrl(map.get("url"))) {
+					continue;
+				}
+				Task task = new Task();
+				if (taskConfig != null) {
+					task.setPriority(taskConfig.getPriority());
+					task.setTaskConfigId(taskConfig.getId());
+				}
+				task.setState(Constant.TASK_STATE_INITIAL);
+				// task.setResultState(Constant.TASK_STATE_INITIAL);
+				task.setStateFlag(true);
+				task.setUrl(map.get("url"));
+				task.setType(Constant.DETAIL_TASK_TYPE);
+				task.setCreateTime(new Date());
+				task.setRetry(0);
+				task.setNodename(nodeName);
+				mongoTemplate.insert(task);
+				return true;
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 		}
-
+		return false;
 	}
 
 	private boolean checkDetailUrl(String url) {

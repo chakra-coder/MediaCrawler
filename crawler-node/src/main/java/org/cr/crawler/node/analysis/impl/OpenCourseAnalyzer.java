@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cr.crawler.node.analysis.Analyzer;
-import org.cr.crawler.node.parse.AbstractParser;
 import org.cr.crawler.node.parse.impl.openCourseParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
